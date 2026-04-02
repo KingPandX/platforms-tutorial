@@ -1,0 +1,27 @@
+[gd_scene format=4 uid="uid://c5wn8kyeudmek"]
+
+[ext_resource type="Texture2D" uid="uid://dfjyhp21p23vw" path="res://floor.png" id="1_6hn5e"]
+[ext_resource type="PackedScene" uid="uid://b66up1qymooio" path="res://player.tscn" id="1_8cmea"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t5pi6"]
+texture = ExtResource("1_6hn5e")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_wi6fe"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_t5pi6")
+
+[node name="SandBox" type="Node2D" unique_id=1070583361]
+
+[node name="Block" type="TileMapLayer" parent="." unique_id=705754752]
+tile_map_data = PackedByteArray("AAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAANAAgAAAAAAAAAAAANAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAAAAAAAAAAAMAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAAJAAgAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_wi6fe")
+
+[node name="Player" parent="." unique_id=936115147 instance=ExtResource("1_8cmea")]
+position = Vector2(191, 183)
