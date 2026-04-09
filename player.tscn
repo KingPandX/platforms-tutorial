@@ -147,12 +147,14 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q11d5"]
-radius = 6.0
-height = 32.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
+size = Vector2(12, 35)
 
 [node name="Player" type="CharacterBody2D" unique_id=936115147]
 script = ExtResource("1_hqtel")
+Acc = 30.0
+Dcc = 20.0
+"correction_ämount" = 1.5
 
 [node name="Visual" type="AnimatedSprite2D" parent="." unique_id=1440548232]
 sprite_frames = SubResource("SpriteFrames_exxxw")
@@ -160,5 +162,24 @@ animation = &"Idle"
 frame_progress = 0.41020527
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=913024742]
-position = Vector2(0, 4)
-shape = SubResource("CapsuleShape2D_q11d5")
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_hqtel")
+
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=1537699183]
+wait_time = 0.135
+one_shot = true
+
+[node name="BufferTimer" type="Timer" parent="." unique_id=729340717]
+wait_time = 0.128
+one_shot = true
+
+[node name="RayDer" type="RayCast2D" parent="." unique_id=1245347778]
+position = Vector2(6, -15)
+target_position = Vector2(0, -15)
+
+[node name="RayIzq" type="RayCast2D" parent="." unique_id=198352091]
+position = Vector2(-6, -15)
+target_position = Vector2(0, -15)
+
+[connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
+[connection signal="timeout" from="BufferTimer" to="." method="_on_buffer_timer_timeout"]
