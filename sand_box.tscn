@@ -82,7 +82,7 @@ tile_map_data = PackedByteArray("AAAAAA4AAgABAAEAAAABAA4AAgABAAEAAAACAA4AAgABAAE
 tile_set = SubResource("TileSet_wi6fe")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1921324386]
-position = Vector2(40, 200)
+position = Vector2(40, 112)
 ignore_rotation = false
 zoom = Vector2(2.735, 2.735)
 limit_left = 0
@@ -94,11 +94,7 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="Player" parent="." unique_id=936115147 instance=ExtResource("1_8cmea")]
-position = Vector2(40, 200)
-MaxSpeed = 301.87
-JumpForce = -402.71
-Acc = 31.5
-Dcc = 18.53
+position = Vector2(40, 112)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=1432320315]
 remote_path = NodePath("../../Camera2D")

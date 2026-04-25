@@ -8,6 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://bvk6ie62cgltw" path="res://Knight 2D Pixel Art/Sprites/with_outline/ATTACK 2.png" id="6_b26j0"]
 [ext_resource type="Texture2D" uid="uid://v2p1x3q4w1gp" path="res://Knight 2D Pixel Art/Sprites/with_outline/ATTACK 3.png" id="7_n7ghd"]
 [ext_resource type="Texture2D" uid="uid://ohidn6qd5vv5" path="res://Knight 2D Pixel Art/Sprites/with_outline/DEFEND.png" id="8_nvl01"]
+[ext_resource type="Script" uid="uid://4nrdd6ksqt2e" path="res://FSM/FSM.gd" id="9_b26j0"]
+[ext_resource type="Script" uid="uid://bwqrodnjjueh5" path="res://FSM/states/idle.gd" id="10_n7ghd"]
+[ext_resource type="Script" uid="uid://c7ss2hcgil6mf" path="res://air.gd" id="11_ivps1"]
+[ext_resource type="Script" uid="uid://c7o1ngllyk6ai" path="res://move.gd" id="11_nvl01"]
+[ext_resource type="Script" uid="uid://d1r2bmgcaod6u" path="res://jump.gd" id="12_urp6f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_msjyt"]
 atlas = ExtResource("1_i3pqv")
@@ -346,9 +351,6 @@ size = Vector2(38.5, 48)
 
 [node name="Player" type="CharacterBody2D" unique_id=936115147]
 script = ExtResource("1_hqtel")
-Acc = 30.0
-Dcc = 20.0
-"correction_ämount" = 1.5
 
 [node name="Visual" type="AnimatedSprite2D" parent="." unique_id=1440548232]
 sprite_frames = SubResource("SpriteFrames_exxxw")
@@ -402,6 +404,24 @@ position = Vector2(14.75, -5)
 shape = SubResource("RectangleShape2D_n7ghd")
 disabled = true
 debug_color = Color(0.7411765, 0.02745098, 0.38039216, 0.41960785)
+
+[node name="FSM" type="Node" parent="." unique_id=1803727075 node_paths=PackedStringArray("init_state", "context")]
+script = ExtResource("9_b26j0")
+init_state = NodePath("idle")
+context = [NodePath(".."), NodePath("../Visual")]
+metadata/_custom_type_script = "uid://4nrdd6ksqt2e"
+
+[node name="idle" type="Node" parent="FSM" unique_id=575136390]
+script = ExtResource("10_n7ghd")
+
+[node name="move" type="Node" parent="FSM" unique_id=2124886957]
+script = ExtResource("11_nvl01")
+
+[node name="jump" type="Node" parent="FSM" unique_id=828041677]
+script = ExtResource("12_urp6f")
+
+[node name="air" type="Node" parent="FSM" unique_id=1710856900]
+script = ExtResource("11_ivps1")
 
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
 [connection signal="timeout" from="BufferTimer" to="." method="_on_buffer_timer_timeout"]

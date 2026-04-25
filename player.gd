@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @export var MaxSpeed : float = 300
 @export var JumpForce : float = -400
@@ -32,93 +33,15 @@ var attack_buffer : bool
 func _ready() -> void:
 	visual.animation_finished.connect(_animation_end)
 
-func _physics_process(delta: float) -> void:
-	if !is_attack and combo_timer > 0:
-		combo_timer -= delta
-		if combo_timer <= 0:
-			combo_count = 0
-	
-	var Xaxis = Input.get_axis("left","right")
-	if is_attack: Xaxis = 0
-	
-	if !is_on_floor():
-		if coyote_timer.is_stopped():
-			coyote_timer.start()
-		
-		velocity.y += get_gravity().y * delta
-		
-		if !is_attack:
-			if velocity.y < 0:
-				visual.play("Up")
-			else:
-				visual.play("Fall")
-	else:
-		can_jump = true
-		if !is_attack:
-			if velocity.x != 0:
-				visual.play("Run")
-			else:
-				visual.play("Idle")
-	
-	if Input.is_action_just_pressed("jump"):
-		JumpBuffer = true
-		buffer_timer.start()
-	
-	if Input.is_action_just_pressed("attack"):
-		attack_buffer = true
-		attack_buffer_timer.start()
-	
-	if JumpBuffer and can_jump:
-			velocity.y = JumpForce
-			can_jump = false
-			JumpBuffer = false
-	
-	if attack_buffer and !is_attack:
-		_performance_attack()
-	
-	if Input.is_action_just_released("jump"):
-		if velocity.y < 0:
-			velocity.y /= 2
-	
-	var target_speed = Xaxis * MaxSpeed
-	if Xaxis != 0:
-		visual.flip_h = Xaxis < 0
-		velocity.x = move_toward(velocity.x, target_speed, Acc)
-	else:
-		velocity.x = move_toward(velocity.x, target_speed, Dcc)
-	
-	move_and_slide()
-	
-	if velocity.y < 0:
-		_corner_correction() 
-
-func _performance_attack():
-	combo_count += 1
-	
-	if combo_count > 0:
-		if combo_count > 3:
-			combo_count = 1
-		is_attack = true
-		combo_timer = combo_timeout
-		
-		var animation_name : String = "atk" + str(combo_count)
-		visual.play(animation_name)
-		if combo_count == 1:
-			atk_1.disabled = false
-			await visual.animation_finished
-			atk_1.disabled = true
-		elif combo_count == 2:
-			atk_2.disabled = false
-			await visual.animation_finished
-			atk_2.disabled = true
-		elif combo_count == 3:
-			atk_3.disabled = false
-			await visual.animation_finished
-			atk_3.disabled = true
-
 func _animation_end():
 	if is_attack:
 		is_attack = false
+
+func _physics_process(delta: float) -> void:
+	if !is_on_floor():
+		coyote_timer.start()
+	else:
+		can_jump = true
 
 func _corner_correction():
 	ray_der.force_raycast_update()
